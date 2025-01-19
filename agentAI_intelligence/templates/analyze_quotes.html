@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Analyze Supplier Quotes</title>
+</head>
+<body>
+    <h1>Analyze Supplier Quotes</h1>
+    <h2>Ranked Quotes</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Supplier Name</th>
+                <th>Price Per Unit</th>
+                <th>Delivery Date</th>
+                <th>Additional Terms</th>
+                <th>Score</th>
+                <th>Explanation</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rank, quote in enumerate(analysis["ranked_quotes"], start=1) %}
+            <tr>
+                <td>{{ rank }}</td>
+                <td>{{ quote["supplier_name"] }}</td>
+                <td>${{ quote["price_per_unit"] }}</td>
+                <td>{{ quote["delivery_date"] }}</td>
+                <td>{{ quote["additional_terms"] }}</td>
+                <td>{{ quote["score"] }}</td>
+                <td>{{ quote["explanation"] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>AI Insights</h2>
+    <h3>Trends</h3>
+    <ul>
+        {% for trend in analysis["ai_insights"]["trends"] %}
+        <li>{{ trend }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Risks</h3>
+    <ul>
+        {% for risk in analysis["ai_insights"]["risks"] %}
+        <li>{{ risk }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Optimizations</h3>
+    <ul>
+        {% for optimization in analysis["ai_insights"]["optimizations"] %}
+        <li>{{ optimization }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

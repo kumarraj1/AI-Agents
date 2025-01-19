@@ -1,0 +1,107 @@
+RFQ ID: RFQ2025-001
+Supplier ID: S001
+Supplier Name: TechWorld
+Event Title: Procurement of RAM Modules
+Submission Date: 2025-01-20
+Validity Period: 2025-01-20 to 2025-02-20
+
+Line Items:
+1. Line Item Number: 001
+   Commodity: RAM (16 GB DDR4)
+   Quantity: 100
+   Unit of Measure: Units
+   Price Per Unit: $1200
+   Total Cost: $120,000
+   Delivery Date: 2025-01-25
+   Delivery Terms: FOB
+   Warranty: 2 years
+   Payment Terms: Net 30
+   Additional Terms: Free shipping for orders above $10,000.
+
+---
+
+RFQ ID: RFQ2025-001
+Supplier ID: S002
+Supplier Name: DataMax
+Event Title: Procurement of RAM Modules
+Submission Date: 2025-01-20
+Validity Period: 2025-01-20 to 2025-02-15
+
+Line Items:
+1. Line Item Number: 001
+   Commodity: RAM (16 GB DDR4)
+   Quantity: 120
+   Unit of Measure: Units
+   Price Per Unit: $1150
+   Total Cost: $138,000
+   Delivery Date: 2025-01-24
+   Delivery Terms: CIF
+   Warranty: 3 years
+   Payment Terms: Net 45
+   Additional Terms: 5% discount for orders above 150 units.
+
+---
+
+RFQ ID: RFQ2025-001
+Supplier ID: S003
+Supplier Name: SupplyHub
+Event Title: Procurement of RAM Modules
+Submission Date: 2025-01-20
+Validity Period: 2025-01-20 to 2025-02-25
+
+Line Items:
+1. Line Item Number: 001
+   Commodity: RAM (16 GB DDR4)
+   Quantity: 90
+   Unit of Measure: Units
+   Price Per Unit: $1180
+   Total Cost: $106,200
+   Delivery Date: 2025-01-28
+   Delivery Terms: DDP
+   Warranty: 1 year
+   Payment Terms: Net 60
+   Additional Terms: Includes free installation.
+
+---
+
+RFQ ID: RFQ2025-001
+Supplier ID: S004
+Supplier Name: CoreLink Solutions
+Event Title: Procurement of RAM Modules
+Submission Date: 2025-01-20
+Validity Period: 2025-01-20 to 2025-02-10
+
+Line Items:
+1. Line Item Number: 001
+   Commodity: RAM (16 GB DDR4)
+   Quantity: 110
+   Unit of Measure: Units
+   Price Per Unit: $1250
+   Total Cost: $137,500
+   Delivery Date: 2025-01-22
+   Delivery Terms: EXW
+   Warranty: 3 years
+   Payment Terms: Advance Payment
+   Additional Terms: Priority delivery for urgent orders.
+
+---
+
+RFQ ID: RFQ2025-001
+Supplier ID: S005
+Supplier Name: Global Components
+Event Title: Procurement of RAM Modules
+Submission Date: 2025-01-20
+Validity Period: 2025-01-20 to 2025-02-15
+
+Line Items:
+1. Line Item Number: 001
+   Commodity: RAM (16 GB DDR4)
+   Quantity: 150
+   Unit of Measure: Units
+   Price Per Unit: $1100
+   Total Cost: $165,000
+   Delivery Date: 2025-01-30
+   Delivery Terms: FOB
+   Warranty: 2 years
+   Payment Terms: Net 30
+   Additional Terms: Free extended warranty for bulk orders over $150,000.

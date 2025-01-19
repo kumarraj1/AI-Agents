@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit Procurement Event</title>
+    <script>
+        function publishEvent() {
+            const eventData = {
+                selected_suppliers: Array.from(document.querySelectorAll(".supplier-checkbox")).map(cb => cb.value),
+                quantity: document.getElementById("quantity").value,
+                payment_terms: document.getElementById("payment_terms").value,
+                commodity: document.getElementById("commodity").value,
+                budget: document.getElementById("budget").value,
+                delivery_deadline: document.getElementById("delivery_deadline").value
+            };
+
+            fetch('/publish_event', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(eventData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                window.location.href = "/analyze_quotes"; // Redirect to analyze quotes page
+            })
+            .catch(error => alert("Error publishing event: " + error));
+        }
+    </script>
+</head>
+<body>
+    <h1>Edit Procurement Event</h1>
+    <h2>Selected Suppliers</h2>
+    <ul>
+        {% for supplier in selected_suppliers %}
+        <li>
+            <input type="checkbox" class="supplier-checkbox" value="{{ supplier }}" checked>
+            {{ supplier }}
+        </li>
+        {% endfor %}
+    </ul>
+    <h3>Event Details</h3>
+    <label>Commodity:</label><input type="text" id="commodity"><br>
+    <label>Quantity:</label><input type="number" id="quantity"><br>
+    <label>Budget:</label><input type="number" id="budget"><br>
+    <label>Payment Terms:</label><input type="text" id="payment_terms"><br>
+    <label>Delivery Deadline:</label><input type="date" id="delivery_deadline"><br>
+    <button onclick="publishEvent()">Publish Event</button>
+</body>
+</html>
