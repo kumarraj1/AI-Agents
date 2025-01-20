@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Recommendations</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+</head>
+<body>
+    <h1>Enter Event Details</h1>
+    <form id="eventForm">
+        <label for="commodity">Commodity:</label>
+        <input type="text" id="commodity" name="commodity" required><br><br>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required><br><br>
+
+        <label for="region">Region:</label>
+        <input type="text" id="region" name="region" required><br><br>
+
+        <label for="budget">Budget:</label>
+        <input type="number" id="budget" name="budget" required><br><br>
+
+        <button type="button" onclick="submitEvent()">Submit</button>
+    </form>
+
+    <div id="recommendations"></div>
+
+    <script>
+        // Function to submit event details and fetch supplier recommendations
+        function submitEvent() {
+            const buyerInput = {
+                commodity: document.getElementById("commodity").value,
+                quantity: document.getElementById("quantity").value,
+                region: document.getElementById("region").value,
+                budget: document.getElementById("budget").value
+            };
+
+            // Fetch supplier recommendations from the backend
+            fetch('/get_suppliers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(buyerInput)
+            })
+            .then(response => response.json())
+            .then(data => displayRecommendations(data))
+            .catch(error => alert("Error fetching suppliers: " + error));
+        }
+
+        // Function to display supplier recommendations
+        function displayRecommendations(data) {
+            const container = document.getElementById("recommendations");
+            container.innerHTML = "<h2>Supplier Recommendations</h2>";
+
+            // Handle errors in response
+            if (data.error) {
+                container.innerHTML += `<p>Error: ${data.error}</p>`;
+                return;
+            }
+
+            // Check if ranked suppliers exist
+            if (!data.ranked_suppliers || data.ranked_suppliers.length === 0) {
+                container.innerHTML += `<p>No suppliers found. Please refine your input or try again.</p>`;
+                return;
+            }
+
+            // Display ranked suppliers
+            const suppliers = data.ranked_suppliers;
+
+            suppliers.forEach((supplier, index) => {
+                container.innerHTML += `
+                    <div>
+                        <input type="checkbox" class="supplier-checkbox" value="${supplier.supplier_name}">
+                        <strong>${index + 1}. ${supplier.supplier_name}</strong> (Score: ${supplier.score})<br>
+                        Reason: ${supplier.ranking_reason}<br>
+                        Explanation: ${supplier.explanation}<br>
+                        Match: ${supplier.match_percentage}%<br>
+                        Region: ${supplier.region}<br>
+                        Risks: ${supplier.risks.join(", ")}<br>
+                    </div>
+                `;
+            });
+
+            // Display global AI insights
+            if (data.ai_insights) {
+                container.innerHTML += `
+                    <h3>Global AI Insights</h3>
+                    <p><strong>Trends:</strong> ${data.ai_insights.trends.join(", ")}</p>
+                    <p><strong>Risks:</strong> ${data.ai_insights.risks.join(", ")}</p>
+                    <p><strong>Optimizations:</strong> ${data.ai_insights.optimizations.join(", ")}</p>
+                `;
+            }
+
+            // Add "Edit and Publish" button
+            container.innerHTML += `<button onclick="proceedToEdit()">Edit and Publish</button>`;
+        }
+
+        // Function to proceed to the edit event page with selected suppliers
+        function proceedToEdit() {
+            const selectedSuppliers = [];
+            document.querySelectorAll(".supplier-checkbox:checked").forEach(checkbox => {
+                selectedSuppliers.push(checkbox.value);
+            });
+
+            if (selectedSuppliers.length === 0) {
+                alert("Please select at least one supplier to proceed.");
+                return;
+            }
+
+            // Send selected suppliers to the backend
+            fetch('/edit_event', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ selected_suppliers: selectedSuppliers })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    window.location.href = '/edit_event'; // Redirect to the edit event page
+                }
+            })
+            .catch(error => alert("Error proceeding to edit event: " + error));
+        }
+    </script>
+</body>
+</html>
+================================================
+
