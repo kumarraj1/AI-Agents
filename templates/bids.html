@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Submit Bids</title>
+</head>
+<body>
+    <h1>Supplier Bid Submission</h1>
+    <form id="bidForm">
+        <label>Supplier ID</label>
+        <input type="text" id="supplier_id">
+        <label>Bid Amount</label>
+        <input type="number" id="bid_amount">
+        <label>Delivery Time (days)</label>
+        <input type="number" id="delivery_time">
+        <button type="button" onclick="submitBid()">Submit Bid</button>
+    </form>
+    <div id="bids"></div>
+
+    <script>
+        function submitBid() {
+            const data = {
+                supplier_id: document.getElementById("supplier_id").value,
+                bid_amount: document.getElementById("bid_amount").value,
+                delivery_time: document.getElementById("delivery_time").value
+            };
+
+            console.log("Submitting bid:", data);
+
+            fetch('/submit_bid', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                alert("Bid submitted successfully!");
+            })
+            .catch(error => {
+                console.error("Error submitting bid:", error);
+            });
+        }
+    </script>
+</body>
+</html>

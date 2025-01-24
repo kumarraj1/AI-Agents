@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze Supplier Quotes</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Analyze Supplier Quotes</h1>
+        <h2>Ranked Quotes</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Supplier Name</th>
+                    <th>Price</th>
+                    <th>Delivery Time</th>
+                    <th>Additional Terms</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rank, quote in enumerate(analysis.ranked_quotes, start=1) %}
+                <tr>
+                    <td>{{ rank }}</td>
+                    <td>{{ quote.supplier_name }}</td>
+                    <td>${{ quote.price_per_unit }}</td>
+                    <td>{{ quote.delivery_date }}</td>
+                    <td>{{ quote.additional_terms }}</td>
+                    <td>{{ quote.score }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>AI Insights</h2>
+        <p><strong>Trends:</strong> {{ analysis.ai_insights.trends | join(', ') }}</p>
+        <p><strong>Risks:</strong> {{ analysis.ai_insights.risks | join(', ') }}</p>
+        <p><strong>Optimizations:</strong> {{ analysis.ai_insights.optimizations | join(', ') }}</p>
+        <p><strong>Sustainability:</strong> {{ analysis.ai_insights.sustainability | join(', ') }}</p>
+    </div>
+</body>
+</html>

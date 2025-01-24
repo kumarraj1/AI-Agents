@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Procurement Event</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Procurement Event</h1>
+        <form id="editEventForm">
+            <label for="commodity">Commodity:</label>
+            <input type="text" id="commodity" name="commodity" value="{{ selected_suppliers[0]['commodity'] }}" required><br>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" value="{{ selected_suppliers[0]['quantity'] }}" required><br>
+
+            <label for="payment_terms">Payment Terms:</label>
+            <input type="text" id="payment_terms" name="payment_terms" required><br>
+
+            <button type="button" onclick="publishEvent()">Publish Event</button>
+        </form>
+    </div>
+
+    <script>
+        function publishEvent() {
+            const formData = {
+                commodity: document.getElementById('commodity').value,
+                quantity: document.getElementById('quantity').value,
+                payment_terms: document.getElementById('payment_terms').value
+            };
+
+            fetch('/publish_event', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => alert("Error publishing event: " + error));
+        }
+    </script>
+</body>
+</html>

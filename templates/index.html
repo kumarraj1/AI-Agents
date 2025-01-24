@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier Recommendation</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Enter Event Details</h1>
+        <form id="eventForm">
+            <label for="commodity">Commodity:</label>
+            <input type="text" id="commodity" name="commodity" required><br>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required><br>
+
+            <label for="region">Region:</label>
+            <input type="text" id="region" name="region" required><br>
+
+            <label for="budget">Budget:</label>
+            <input type="number" id="budget" name="budget" required><br>
+
+            <button type="button" onclick="submitEvent()">Submit</button>
+        </form>
+
+        <div id="recommendations">
+            <!-- Supplier recommendations will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        function submitEvent() {
+            const formData = {
+                commodity: document.getElementById('commodity').value,
+                quantity: document.getElementById('quantity').value,
+                region: document.getElementById('region').value,
+                budget: document.getElementById('budget').value
+            };
+
+            fetch('/get_suppliers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const recommendationsDiv = document.getElementById('recommendations');
+                recommendationsDiv.innerHTML = `
+                    <h2>Supplier Recommendations</h2>
+                    <ul>
+                        ${data.ranked_suppliers.map(supplier => `
+                            <li>
+                                <strong>${supplier.supplier_name}</strong>
+                                (Score: ${supplier.score})
+                                <p>${supplier.ranking_reason}</p>
+                                <p>Match: ${supplier.match_percentage}%</p>
+                                <p>Region: ${supplier.region}</p>
+                                <p>Risks: ${supplier.risks.join(', ')}</p>
+                            </li>
+                        `).join('')}
+                    </ul>
+                    <h3>AI Insights</h3>
+                    <p><strong>Trends:</strong> ${data.ai_insights.trends.join(', ')}</p>
+                    <p><strong>Risks:</strong> ${data.ai_insights.risks.join(', ')}</p>
+                    <p><strong>Optimizations:</strong> ${data.ai_insights.optimizations.join(', ')}</p>
+                `;
+            })
+            .catch(error => alert("Error fetching suppliers: " + error));
+        }
+    </script>
+</body>
+</html>
